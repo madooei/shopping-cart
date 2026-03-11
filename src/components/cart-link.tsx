@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
+import { useStore } from "@tanstack/react-store";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "@/hooks/use-cart";
+import { cartStore } from "@/store/cart-store";
 import { Badge } from "@/components/ui/badge";
 
 export function CartLink() {
-  const { totalItems } = useCart();
+  const totalItems = useStore(cartStore, (state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   return (
     <Link
