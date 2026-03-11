@@ -4,6 +4,7 @@ import { fetchProduct } from "@/api/products";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
 
 export const Route = createFileRoute("/products/$productId")({
   component: ProductPage,
@@ -13,6 +14,7 @@ function ProductPage() {
   const { productId } = Route.useParams();
   const parsedProductId = Number(productId);
   const isInvalidProductId = Number.isNaN(parsedProductId);
+  const { addToCart } = useCart();
 
   const {
     data: product,
@@ -64,7 +66,7 @@ function ProductPage() {
             Rating: {product.rating} / 5
           </p>
           <p className="mt-4 text-muted-foreground">{product.description}</p>
-          <Button className="mt-6" size="lg">
+          <Button className="mt-6" size="lg" onClick={() => addToCart(product)}>
             Add to Cart
           </Button>
         </div>
